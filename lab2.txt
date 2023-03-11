@@ -1,0 +1,14 @@
+operatori unari:
+	x++
+	-x
+	x -- 
+	!x
+	&x
+	*x
+	x[y]
+	x(y,<)
+	x->
+	a, b
+	
+operator ternar:
+	x ? a : b
