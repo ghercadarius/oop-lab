@@ -2,6 +2,10 @@
 
 using namespace std;
 
+int sstrlen(const char *x){
+    return (int)strlen(x);
+}
+
 class comanda{
     char *id;
     int suma;
@@ -13,27 +17,27 @@ public:
         suma = 0;
     }
     comanda(const char *id_com, const int suma_com, const char *descriere_com) {
-        id = new char[strlen(id_com) + 1];
-        descriere = new char[strlen(descriere_com) + 1];
+        id = new char[sstrlen(id_com) + 1];
+        descriere = new char[sstrlen(descriere_com) + 1];
         suma = suma_com;
-        for (int i = 0; i < strlen(id_com); i++) {
+        for (int i = 0; i < sstrlen(id_com); i++) {
             id[i] = id_com[i];
         }
-        id[strlen(id_com)] = '\0';
-        for (int i = 0; i < strlen(descriere_com); i++) {
+        id[sstrlen(id_com)] = '\0';
+        for (int i = 0; i < sstrlen(descriere_com); i++) {
             descriere[i] = descriere_com[i];
         }
-        descriere[strlen(descriere_com)] = '\0';
+        descriere[sstrlen(descriere_com)] = '\0';
     }
     comanda(const comanda &aux){
-        id = new char[strlen(aux.getId()) + 1];
-        descriere = new char[strlen(aux.getDescriere()) + 1];
+        id = new char[sstrlen(aux.getId()) + 1];
+        descriere = new char[sstrlen(aux.getDescriere()) + 1];
         suma = aux.getSuma();
-        for (int i = 0; i < strlen(aux.getId()); i++) {
+        for (int i = 0; i < sstrlen(aux.getId()); i++) {
             id[i] = aux.getId()[i];
         }
-        id[strlen(aux.getId())] = '\0';
-        for (int i = 0; i < strlen(aux.getDescriere()); i++) {
+        id[sstrlen(aux.getId())] = '\0';
+        for (int i = 0; i < sstrlen(aux.getDescriere()); i++) {
             descriere[i] = aux.getDescriere()[i];
         }
     }
@@ -74,8 +78,8 @@ public:
     }
     void schimba_comanda(const char *descriere_schimb, const int suma_schimb){
         delete [] descriere;
-        descriere = new char [strlen(descriere_schimb)+1];
-        for(int i = 0; i < strlen(descriere_schimb); i++){
+        descriere = new char [sstrlen(descriere_schimb)+1];
+        for(int i = 0; i < sstrlen(descriere_schimb); i++){
             descriere[i] = descriere_schimb[i];
         }
         suma = suma_schimb;
@@ -85,8 +89,8 @@ public:
     }
     void act_id(const char *id_nou){
         delete [] id;
-        id = new char [strlen(id_nou)+1];
-        for(int i = 0;i < strlen(id_nou); i++){
+        id = new char [sstrlen(id_nou)+1];
+        for(int i = 0;i < sstrlen(id_nou); i++){
             id[i]  = id_nou[i];
         }
     }
@@ -106,9 +110,9 @@ public:
         return false;
     }
     comanda operator +(const comanda &aux){
-        char * ndescriere = new char [strlen(this->getDescriere())+strlen(aux.getDescriere())+4];
+        char * ndescriere = new char [sstrlen(this->getDescriere())+sstrlen(aux.getDescriere())+4];
         int k = 0;
-        for(int i = 0;i < strlen(this -> getDescriere()); i++){
+        for(int i = 0;i < sstrlen(this -> getDescriere()); i++){
             ndescriere[i] = (this -> getDescriere())[i];
             k++;
         }
@@ -116,14 +120,14 @@ public:
         ndescriere[k+1] = '+';
         ndescriere[k+2] = ' ';
         k += 3;
-        for(int i = 0;i < strlen(aux.getDescriere()); i++){
+        for(int i = 0;i < sstrlen(aux.getDescriere()); i++){
             ndescriere[k] = (aux.getDescriere())[i];
             k++;
         }
         int nsuma = this -> getSuma() + aux.getSuma();
-        char * nid = new char [strlen(this->getId()) + strlen(aux.getId()) + 2];
+        char * nid = new char [sstrlen(this->getId()) + sstrlen(aux.getId()) + 2];
         int idk = 0;
-        for(int i = 0;i < strlen(this -> getId()); i++){
+        for(int i = 0;i < sstrlen(this -> getId()); i++){
             nid[i] = (this -> getId())[i];
             idk++;
         }
@@ -131,7 +135,7 @@ public:
         nid[idk+1] = '+';
         nid[idk+2] = ' ';
         idk += 3;
-        for(int i = 0;i < strlen(aux.getId()); i++) {
+        for(int i = 0;i < sstrlen(aux.getId()); i++) {
             ndescriere[idk] = (aux.getId())[i];
             idk++;
         }
@@ -167,7 +171,7 @@ public:
         end = i.getEnd();
     }
     ~vcomanda(){
-        cnod *i,*t;
+        cnod *i = start,*t;
         while(i!=nullptr){
             t = i -> next;
             delete i;
@@ -253,16 +257,16 @@ class masina{
 
 public:
     masina(char *cul, char *v, int mot, char *firm, int imp, vcomanda ncomenzi){
-        culoare = new char [strlen(cul)+1];
-        vin = new char [strlen(vin)+1];
-        firma = new char [strlen(firm)+1];
-        for(int i = 0;i < strlen(cul); i++){
+        culoare = new char [sstrlen(cul)+1];
+        vin = new char [sstrlen(vin)+1];
+        firma = new char [sstrlen(firm)+1];
+        for(int i = 0;i < sstrlen(cul); i++){
             culoare[i] = cul[i];
         }
-        for(int i = 0;i < strlen(v); i++){
+        for(int i = 0;i < sstrlen(v); i++){
             vin[i] = v[i];
         }
-        for(int i = 0;i < strlen(firm); i++){
+        for(int i = 0;i < sstrlen(firm); i++){
             firma[i] = firm[i];
         }
         capacitate_motor = mot;
@@ -318,27 +322,27 @@ public:
     }
     void setCuloare(const char *ncolor){
         delete [] culoare;
-        culoare = new char [strlen(ncolor) + 1];
-        for(int i = 0; i < strlen(ncolor); i++){
+        culoare = new char [sstrlen(ncolor) + 1];
+        for(int i = 0; i < sstrlen(ncolor); i++){
             culoare[i] = ncolor[i];
         }
-        culoare[strlen(ncolor)] = '\0';
+        culoare[sstrlen(ncolor)] = '\0';
     }
     void setVin(const char *nvin){
         delete [] vin;
-        vin = new char [strlen(nvin) + 1];
-        for(int i = 0;i < strlen(nvin); i++){
+        vin = new char [sstrlen(nvin) + 1];
+        for(int i = 0;i < sstrlen(nvin); i++){
             vin[i] = nvin[i];
         }
-        vin[strlen(nvin) + 1] = '\0';
+        vin[sstrlen(nvin) + 1] = '\0';
     }
     void setFirma(const char *nfirm){
         delete [] firma;
-        firma = new char [strlen(nfirm) + 1];
-        for(int i = 0;i < strlen(nfirm); i++){
+        firma = new char [sstrlen(nfirm) + 1];
+        for(int i = 0;i < sstrlen(nfirm); i++){
             firma[i] = nfirm[i];
         }
-        firma[strlen(nfirm) + 1] = '\0';
+        firma[sstrlen(nfirm) + 1] = '\0';
     }
     void setCapacitate(const int ncap){
         capacitate_motor = ncap;
@@ -351,7 +355,7 @@ public:
     }
     friend std::ostream& operator<<(ostream& os, masina& a){
         os << a.getVin() << "\n" << a.getFirma() << "\n" << a.getCuloare() << "\n" << a.getCapacitate()
-            << "\n"<< a.getImpozit() << "\n" << a.getComenzi() << "\n";
+           << "\n"<< a.getImpozit() << "\n" << a.getComenzi() << "\n";
         return os;
     }
     friend std::istream& operator>>(istream& is, masina &a){
@@ -411,63 +415,63 @@ void mmodifica(masina &a, int index){
         cout<<"13. Inapoi\n";
         cin>>n;
         switch(n){
-    case 1:
-        cout<<a.getCuloare()<<"\n";
-        break;
-    case 2:
-        cout<<"Culoare noua\n";
-        char nc[200];
-        cin.getline(nc, 199);
-        cin.get();
-        a.setCuloare(nc);
-        break;
-    case 3:
-        cout<<a.getVin()<<"\n";
-        break;
-    case 4:
-        cout<<"VIN Nou\n";
-        char nv[200];
-        cin.getline(nv, 199);
-        cin.get();
-        a.setVin(nv);
-        break;
-    case 5:
-        cout<<a.getFirma()<<"\n";
-        break;
-    case 6:
-        cout<<"Firma noua\n";
-        char nf[200];
-        cin.getline(nf, 199);
-        cin.get();
-        a.setFirma(nf);
-        break;
-    case 7:
-        cout<<a.getCapacitate()<<"\n";
-        break;
-    case 8:
-        cout<<"Capacitate noua\n";
-        int ncap;
-        cin>>ncap;
-        a.setCapacitate(ncap);
-        break;
-    case 9:
-        cout<<a.getImpozit()<<"\n";
-        break;
-    case 10:
-        cout<<"Impozit nou\n";
-        int nimp;
-        cin>>nimp;
-        a.setImpozit(nimp);
-        break;
-    case 11:
-        cout<<a.getComenzi()<<"\n";
-        break;
-    case 12:
-        cout<<"Comenzi noi\n";
-        vcomanda ncom;
-        cin>>ncom;
-        a.setComenzi(ncom);
-        break;
+            case 1:
+                cout<<a.getCuloare()<<"\n";
+                break;
+            case 2:
+                cout<<"Culoare noua\n";
+                char nc[200];
+                cin.getline(nc, 199);
+                cin.get();
+                a.setCuloare(nc);
+                break;
+            case 3:
+                cout<<a.getVin()<<"\n";
+                break;
+            case 4:
+                cout<<"VIN Nou\n";
+                char nv[200];
+                cin.getline(nv, 199);
+                cin.get();
+                a.setVin(nv);
+                break;
+            case 5:
+                cout<<a.getFirma()<<"\n";
+                break;
+            case 6:
+                cout<<"Firma noua\n";
+                char nf[200];
+                cin.getline(nf, 199);
+                cin.get();
+                a.setFirma(nf);
+                break;
+            case 7:
+                cout<<a.getCapacitate()<<"\n";
+                break;
+            case 8:
+                cout<<"Capacitate noua\n";
+                int ncap;
+                cin>>ncap;
+                a.setCapacitate(ncap);
+                break;
+            case 9:
+                cout<<a.getImpozit()<<"\n";
+                break;
+            case 10:
+                cout<<"Impozit nou\n";
+                int nimp;
+                cin>>nimp;
+                a.setImpozit(nimp);
+                break;
+            case 11:
+                cout<<a.getComenzi()<<"\n";
+                break;
+            case 12:
+                cout<<"Comenzi noi\n";
+                vcomanda ncom;
+                cin>>ncom;
+                a.setComenzi(ncom);
+                break;
         }
     }while(n >= 1 && n <= 12);
 }
@@ -484,28 +488,28 @@ void mmas() {
         cout<<"5. Inapoi\n";
         cin>>n;
         switch(n){
-        case 1:
-            cin>>m[im];
-            im++;
-            break;
-        case 2:
-            cout<<"Numar total masini: "<<im<<"\n";
-            cout<<"Numarul masinii:\n";
-            cin>>nm;
-            cout<<m[nm];
-            break;
-        case 3:
-            cout<<"Numar total masini: "<<im<<"\n";
-            cout<<"Numarul masinii:\n";
-            cin>>nm;
-            delete &m[nm];
-            break;
-        case 4:
-            cout<<"Numar total masini: "<<im<<"\n";
-            cout<<"Numarul masinii:\n";
-            int nm;
-            cin>>nm;
-            mmodifica(m[nm], nm);
+            case 1:
+                cin>>m[im];
+                im++;
+                break;
+            case 2:
+                cout<<"Numar total masini: "<<im<<"\n";
+                cout<<"Numarul masinii:\n";
+                cin>>nm;
+                cout<<m[nm];
+                break;
+            case 3:
+                cout<<"Numar total masini: "<<im<<"\n";
+                cout<<"Numarul masinii:\n";
+                cin>>nm;
+                delete &m[nm];
+                break;
+            case 4:
+                cout<<"Numar total masini: "<<im<<"\n";
+                cout<<"Numarul masinii:\n";
+                int nmas;
+                cin>>nmas;
+                mmodifica(m[nmas], nmas);
         }
     }while(n >= 1 && n <= 4);
 }
@@ -526,34 +530,34 @@ void commod(comanda a){
         cout<<"6. Afisare suma\n";
         cin>>n;
         switch(n){
-    case 1:
-        cout<<"Noua descriere:\n";
-        cin.getline(nd, 99);
-        cin.get();
-        cout<<"Noua suma:\n";
-        cin>>ns;
-        a.schimba_comanda(nd, ns);
-        break;
-    case 2:
-        cout<<"Noua suma:\n";
-        cin>>ns;
-        a.schimba_suma(ns);
-        break;
-    case 3:
-        cout<<"Noul ID:\n";
-        cin.getline(nid, 99);
-        cin.get();
-        a.act_id(nid);
-        break;
-    case 4:
-        cout<<a.getDescriere()<<"\n";
-        break;
-    case 5:
-        cout<<a.getId()<<"\n";
-        break;
-    case 6:
-        cout<<a.getSuma()<<"\n";
-        break;
+            case 1:
+                cout<<"Noua descriere:\n";
+                cin.getline(nd, 99);
+                cin.get();
+                cout<<"Noua suma:\n";
+                cin>>ns;
+                a.schimba_comanda(nd, ns);
+                break;
+            case 2:
+                cout<<"Noua suma:\n";
+                cin>>ns;
+                a.schimba_suma(ns);
+                break;
+            case 3:
+                cout<<"Noul ID:\n";
+                cin.getline(nid, 99);
+                cin.get();
+                a.act_id(nid);
+                break;
+            case 4:
+                cout<<a.getDescriere()<<"\n";
+                break;
+            case 5:
+                cout<<a.getId()<<"\n";
+                break;
+            case 6:
+                cout<<a.getSuma()<<"\n";
+                break;
         }
     }while(n >= 1 && n <= 6);
 }
@@ -575,33 +579,33 @@ void parcurgere(vcomanda &a){
         cout<<"7. Iesire\n";
         cin>>n;
         switch(n){
-        case 1:
-            commod(i->el);
-            break;
-        case 2:
-            primul = (i -> el);
-            doi = (i -> next -> el);
-            primul = primul + doi;
-            i -> el = primul;
-            break;
-        case 3:
-            i -> el = i -> next -> el;
-            break;
-        case 4:
-            cout<<i->el<<"\n";
-            break;
-        case 5:
-            if(i -> el == i -> next -> el){
-                cout<<"Sunt egale\n";
-            }
-            else if(i -> el > i -> next -> el){
-                cout<<"Mai mare\n";
-            }
-            else cout<<"Mai mica\n";
-            break;
-        case 6:
-            i++;
-            break;
+            case 1:
+                commod(i->el);
+                break;
+            case 2:
+                primul = (i -> el);
+                doi = (i -> next -> el);
+                primul = primul + doi;
+                i -> el = primul;
+                break;
+            case 3:
+                i -> el = i -> next -> el;
+                break;
+            case 4:
+                cout<<i->el<<"\n";
+                break;
+            case 5:
+                if(i -> el == i -> next -> el){
+                    cout<<"Sunt egale\n";
+                }
+                else if(i -> el > i -> next -> el){
+                    cout<<"Mai mare\n";
+                }
+                else cout<<"Mai mica\n";
+                break;
+            case 6:
+                i++;
+                break;
         }
     }
 }
@@ -617,15 +621,15 @@ void cmodifica(vcomanda &a, int index){
         cout<<"4. Inapoi\n";
         cin>>n;
         switch(n){
-    case 1:
-        parcurgere(a);
-        break;
-    case 2:
-        cout<<a.getStart()->el<<"\n";
-        break;
-    case 3:
-        cout<<a.getEnd()->el<<"\n";
-        break;
+            case 1:
+                parcurgere(a);
+                break;
+            case 2:
+                cout<<a.getStart()->el<<"\n";
+                break;
+            case 3:
+                cout<<a.getEnd()->el<<"\n";
+                break;
         }
     }while(n >= 1 && n <= 3);
 }
@@ -643,28 +647,28 @@ void mcom(){
         cout<<"5. Inapoi\n";
         cin>>n;
         switch(n){
-        case 1:
-            ic++;
-            cin >> c[ic];
-            break;
-        case 2:
-            cout<<"Numar total comenzi "<<ic<<"\n";
-            cout<<"Numar comanda\n";
-            cin>>nc;
-            cout<<c[nc];
-            break;
-        case 3:
-            cout<<"Numar total comenzi "<<ic<<"\n";
-            cout<<"Numar comanda\n";
-            cin>>nc;
-            delete &(c[nc]);
-            break;
-        case 4:
-            cout<<"Numar total comenzi "<<ic<<"\n";
-            cout<<"Numar comanda\n";
-            cin>>nc;
-            cmodifica(c[nc], nc);
-            break;
+            case 1:
+                ic++;
+                cin >> c[ic];
+                break;
+            case 2:
+                cout<<"Numar total comenzi "<<ic<<"\n";
+                cout<<"Numar comanda\n";
+                cin>>nc;
+                cout<<c[nc];
+                break;
+            case 3:
+                cout<<"Numar total comenzi "<<ic<<"\n";
+                cout<<"Numar comanda\n";
+                cin>>nc;
+                delete &(c[nc]);
+                break;
+            case 4:
+                cout<<"Numar total comenzi "<<ic<<"\n";
+                cout<<"Numar comanda\n";
+                cin>>nc;
+                cmodifica(c[nc], nc);
+                break;
         }
 
     }while(n >= 1 && n <= 4);
@@ -681,10 +685,10 @@ int main() {
         cout<<"2. Comanda"<<"\n";
         cin>>n;
         if(n==1)
-        mmas();
+            mmas();
         else
         if(n==2)
-        mcom();
+            mcom();
     }while(n<=2 && n>=1);
     return 0;
 }
