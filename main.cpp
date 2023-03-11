@@ -68,7 +68,6 @@ public:
             delete[] id;
         if(descriere)
             delete[] descriere;
-        delete &suma;
     }
     comanda& operator =(const comanda &aux){
         this -> id = aux.getId();
@@ -288,11 +287,12 @@ public:
         comenzi = aux.getComenzi();
     }
     ~masina(){
-        delete [] culoare;
-        delete [] vin;
-        delete [] firma;
-        delete &capacitate_motor;
-        delete &impozit;
+        if(culoare)
+            delete [] culoare;
+        if(vin)
+            delete [] vin;
+        if(firma)
+            delete [] firma;
     }
     masina& operator =(masina &aux){
         this -> culoare = aux.getCuloare();
@@ -397,7 +397,7 @@ void nwin(){
 void mmodifica(masina &a, int index){
     system("cls");
     nwin();
-    int n, nm;
+    int n;
     do{
         cout<<"Optiuni masina numarul "<<index<<"\n";
         cout<<"1. Afisare culoare\n";
@@ -502,14 +502,14 @@ void mmas() {
                 cout<<"Numar total masini: "<<im<<"\n";
                 cout<<"Numarul masinii:\n";
                 cin>>nm;
-                delete &m[nm];
+                if(im >= nm)
+                    std::destroy_at(std::addressof(m[nm]));
                 break;
             case 4:
                 cout<<"Numar total masini: "<<im<<"\n";
                 cout<<"Numarul masinii:\n";
-                int nmas;
-                cin>>nmas;
-                mmodifica(m[nmas], nmas);
+                cin>>nm;
+                mmodifica(m[nm], nm);
         }
     }while(n >= 1 && n <= 4);
 }
@@ -661,7 +661,8 @@ void mcom(){
                 cout<<"Numar total comenzi "<<ic<<"\n";
                 cout<<"Numar comanda\n";
                 cin>>nc;
-                delete &(c[nc]);
+                if(nc >= ic)
+                    std::destroy_at(std::addressof(c[nc]));
                 break;
             case 4:
                 cout<<"Numar total comenzi "<<ic<<"\n";
