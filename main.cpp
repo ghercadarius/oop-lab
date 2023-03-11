@@ -1,8 +1,11 @@
 #include <iostream>
 #include <cstring>
 #include <stdlib.h>
-
 using namespace std;
+
+int sstrlen(const char *x){
+    return (int)strlen(x);
+}
 
 class comanda{
     char *id;
@@ -15,27 +18,27 @@ public:
         suma = 0;
     }
     comanda(const char *id_com, const int suma_com, const char *descriere_com) {
-        id = new char[strlen(id_com) + 1];
-        descriere = new char[strlen(descriere_com) + 1];
+        id = new char[sstrlen(id_com) + 1];
+        descriere = new char[sstrlen(descriere_com) + 1];
         suma = suma_com;
-        for (int i = 0; i < strlen(id_com); i++) {
+        for (int i = 0; i < sstrlen(id_com); i++) {
             id[i] = id_com[i];
         }
-        id[strlen(id_com)] = '\0';
-        for (int i = 0; i < strlen(descriere_com); i++) {
+        id[sstrlen(id_com)] = '\0';
+        for (int i = 0; i < sstrlen(descriere_com); i++) {
             descriere[i] = descriere_com[i];
         }
-        descriere[strlen(descriere_com)] = '\0';
+        descriere[sstrlen(descriere_com)] = '\0';
     }
     comanda(const comanda &aux){
-        id = new char[strlen(aux.getId()) + 1];
-        descriere = new char[strlen(aux.getDescriere()) + 1];
+        id = new char[sstrlen(aux.getId()) + 1];
+        descriere = new char[sstrlen(aux.getDescriere()) + 1];
         suma = aux.getSuma();
-        for (int i = 0; i < strlen(aux.getId()); i++) {
+        for (int i = 0; i < sstrlen(aux.getId()); i++) {
             id[i] = aux.getId()[i];
         }
-        id[strlen(aux.getId())] = '\0';
-        for (int i = 0; i < strlen(aux.getDescriere()); i++) {
+        id[sstrlen(aux.getId())] = '\0';
+        for (int i = 0; i < sstrlen(aux.getDescriere()); i++) {
             descriere[i] = aux.getDescriere()[i];
         }
     }
@@ -66,7 +69,6 @@ public:
             delete[] id;
         if(descriere)
             delete[] descriere;
-        delete &suma;
     }
     comanda& operator =(const comanda &aux){
         this -> id = aux.getId();
@@ -76,8 +78,8 @@ public:
     }
     void schimba_comanda(const char *descriere_schimb, const int suma_schimb){
         delete [] descriere;
-        descriere = new char [strlen(descriere_schimb)+1];
-        for(int i = 0; i < strlen(descriere_schimb); i++){
+        descriere = new char [sstrlen(descriere_schimb)+1];
+        for(int i = 0; i < sstrlen(descriere_schimb); i++){
             descriere[i] = descriere_schimb[i];
         }
         suma = suma_schimb;
@@ -87,8 +89,8 @@ public:
     }
     void act_id(const char *id_nou){
         delete [] id;
-        id = new char [strlen(id_nou)+1];
-        for(int i = 0;i < strlen(id_nou); i++){
+        id = new char [sstrlen(id_nou)+1];
+        for(int i = 0;i < sstrlen(id_nou); i++){
             id[i]  = id_nou[i];
         }
     }
@@ -108,9 +110,9 @@ public:
         return false;
     }
     comanda operator +(const comanda &aux){
-        char * ndescriere = new char [strlen(this->getDescriere())+strlen(aux.getDescriere())+4];
+        char * ndescriere = new char [sstrlen(this->getDescriere())+sstrlen(aux.getDescriere())+4];
         int k = 0;
-        for(int i = 0;i < strlen(this -> getDescriere()); i++){
+        for(int i = 0;i < sstrlen(this -> getDescriere()); i++){
             ndescriere[i] = (this -> getDescriere())[i];
             k++;
         }
@@ -118,14 +120,14 @@ public:
         ndescriere[k+1] = '+';
         ndescriere[k+2] = ' ';
         k += 3;
-        for(int i = 0;i < strlen(aux.getDescriere()); i++){
+        for(int i = 0;i < sstrlen(aux.getDescriere()); i++){
             ndescriere[k] = (aux.getDescriere())[i];
             k++;
         }
         int nsuma = this -> getSuma() + aux.getSuma();
-        char * nid = new char [strlen(this->getId()) + strlen(aux.getId()) + 2];
+        char * nid = new char [sstrlen(this->getId()) + sstrlen(aux.getId()) + 2];
         int idk = 0;
-        for(int i = 0;i < strlen(this -> getId()); i++){
+        for(int i = 0;i < sstrlen(this -> getId()); i++){
             nid[i] = (this -> getId())[i];
             idk++;
         }
@@ -133,7 +135,7 @@ public:
         nid[idk+1] = '+';
         nid[idk+2] = ' ';
         idk += 3;
-        for(int i = 0;i < strlen(aux.getId()); i++) {
+        for(int i = 0;i < sstrlen(aux.getId()); i++) {
             ndescriere[idk] = (aux.getId())[i];
             idk++;
         }
@@ -169,7 +171,7 @@ public:
         end = i.getEnd();
     }
     ~vcomanda(){
-        cnod *i,*t;
+        cnod *i = start,*t;
         while(i!=nullptr){
             t = i -> next;
             delete i;
@@ -255,16 +257,16 @@ class masina{
 
 public:
     masina(char *cul, char *v, int mot, char *firm, int imp, vcomanda ncomenzi){
-        culoare = new char [strlen(cul)+1];
-        vin = new char [strlen(vin)+1];
-        firma = new char [strlen(firm)+1];
-        for(int i = 0;i < strlen(cul); i++){
+        culoare = new char [sstrlen(cul)+1];
+        vin = new char [sstrlen(vin)+1];
+        firma = new char [sstrlen(firm)+1];
+        for(int i = 0;i < sstrlen(cul); i++){
             culoare[i] = cul[i];
         }
-        for(int i = 0;i < strlen(v); i++){
+        for(int i = 0;i < sstrlen(v); i++){
             vin[i] = v[i];
         }
-        for(int i = 0;i < strlen(firm); i++){
+        for(int i = 0;i < sstrlen(firm); i++){
             firma[i] = firm[i];
         }
         capacitate_motor = mot;
@@ -286,11 +288,12 @@ public:
         comenzi = aux.getComenzi();
     }
     ~masina(){
-        delete [] culoare;
-        delete [] vin;
-        delete [] firma;
-        delete &capacitate_motor;
-        delete &impozit;
+        if(culoare)
+            delete [] culoare;
+        if(vin)
+            delete [] vin;
+        if(firma)
+            delete [] firma;
     }
     masina& operator =(masina &aux){
         this -> culoare = aux.getCuloare();
@@ -320,27 +323,27 @@ public:
     }
     void setCuloare(const char *ncolor){
         delete [] culoare;
-        culoare = new char [strlen(ncolor) + 1];
-        for(int i = 0; i < strlen(ncolor); i++){
+        culoare = new char [sstrlen(ncolor) + 1];
+        for(int i = 0; i < sstrlen(ncolor); i++){
             culoare[i] = ncolor[i];
         }
-        culoare[strlen(ncolor)] = '\0';
+        culoare[sstrlen(ncolor)] = '\0';
     }
     void setVin(const char *nvin){
         delete [] vin;
-        vin = new char [strlen(nvin) + 1];
-        for(int i = 0;i < strlen(nvin); i++){
+        vin = new char [sstrlen(nvin) + 1];
+        for(int i = 0;i < sstrlen(nvin); i++){
             vin[i] = nvin[i];
         }
-        vin[strlen(nvin) + 1] = '\0';
+        vin[sstrlen(nvin) + 1] = '\0';
     }
     void setFirma(const char *nfirm){
         delete [] firma;
-        firma = new char [strlen(nfirm) + 1];
-        for(int i = 0;i < strlen(nfirm); i++){
+        firma = new char [sstrlen(nfirm) + 1];
+        for(int i = 0;i < sstrlen(nfirm); i++){
             firma[i] = nfirm[i];
         }
-        firma[strlen(nfirm) + 1] = '\0';
+        firma[sstrlen(nfirm) + 1] = '\0';
     }
     void setCapacitate(const int ncap){
         capacitate_motor = ncap;
@@ -395,7 +398,7 @@ void nwin(){
 void mmodifica(masina &a, int index){
     system("cls");
     nwin();
-    int n, nm;
+    int n;
     do{
         cout<<"Optiuni masina numarul "<<index<<"\n";
         cout<<"1. Afisare culoare\n";
@@ -500,12 +503,12 @@ void mmas() {
                 cout<<"Numar total masini: "<<im<<"\n";
                 cout<<"Numarul masinii:\n";
                 cin>>nm;
-                delete &m[nm];
+                if(im >= nm)
+                    std::destroy_at(std::addressof(m[nm]));
                 break;
             case 4:
                 cout<<"Numar total masini: "<<im<<"\n";
                 cout<<"Numarul masinii:\n";
-                int nm;
                 cin>>nm;
                 mmodifica(m[nm], nm);
         }
@@ -659,7 +662,8 @@ void mcom(){
                 cout<<"Numar total comenzi "<<ic<<"\n";
                 cout<<"Numar comanda\n";
                 cin>>nc;
-                delete &(c[nc]);
+                if(nc >= ic)
+                    std::destroy_at(std::addressof(c[nc]));
                 break;
             case 4:
                 cout<<"Numar total comenzi "<<ic<<"\n";
