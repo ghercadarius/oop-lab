@@ -398,7 +398,7 @@ void nwin(){
 void mmodifica(masina &a, int index){
     system("cls");
     nwin();
-    int n;
+    int n = 1;
     do{
         cout<<"Optiuni masina numarul "<<index<<"\n";
         cout<<"1. Afisare culoare\n";
@@ -479,7 +479,7 @@ void mmodifica(masina &a, int index){
 void mmas() {
     system("cls");
     nwin();
-    int n, nm;
+    int n = 1, nm = 1;
     do{
         cout<<" Masini\n";
         cout<<"1. Citire masina\n";
@@ -517,9 +517,9 @@ void mmas() {
 void commod(comanda a){
     system("cls");
     nwin();
-    int n;
+    int n = 1;
     char nd[100];
-    int ns;
+    int ns = 1;
     char nid[100];
     do{
         cout<<"Modificare comanda\n";
@@ -566,7 +566,7 @@ void parcurgere(vcomanda &a){
     system("cls");
     nwin();
     cnod *i = a.getIterator();
-    int n;
+    int n = 1;
     comanda primul;
     comanda doi;
     while(i != nullptr && n >= 1 && n <= 6){
@@ -613,7 +613,7 @@ void parcurgere(vcomanda &a){
 void cmodifica(vcomanda &a, int index){
     system("cls");
     nwin();
-    int n;
+    int n = 1;
     do{
         cout<<"Modificare comanda "<<index<<"\n";
         cout<<"1. Parcurgere comenzi\n";
@@ -638,7 +638,7 @@ void cmodifica(vcomanda &a, int index){
 void mcom(){
     system("cls");
     nwin();
-    int n, nc;
+    int n = 1, nc = 1;
     do{
         cout<<"Comenzi\n";
         cout<<"1. Citire comanda\n";
@@ -679,7 +679,7 @@ void mcom(){
 int main() {
     ///initializare meniu
     system("cls");
-    int n;
+    int n = 1;
     do
     {
         cout<<"Proiect realizat de Gherca Darius"<<"\n\n";
