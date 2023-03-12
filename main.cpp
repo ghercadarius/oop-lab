@@ -183,7 +183,7 @@ public:
             start = nullptr;
         }
     }
-    void append(comanda &nel)
+    void append(const comanda &nel)
     {
         if(start)///daca am alocat deja memorie pentru prima pozitie din lista, adica am inceputa lista
         {
@@ -275,7 +275,7 @@ class masina{
     vcomanda comenzi;
 
 public:
-    masina(char *cul, char *v, int mot, char *firm, int imp, vcomanda &ncomenzi){
+    masina(char *cul, char *v, int mot, char *firm, int imp, const vcomanda &ncomenzi){
         culoare = new char [sstrlen(cul)+1];
         vin = new char [sstrlen(vin)+1];
         firma = new char [sstrlen(firm)+1];
@@ -583,7 +583,7 @@ void commod(comanda a){
         }
     }while(n >= 1 && n <= 6);
 }
-void parcurgere(vcomanda &a){
+void parcurgere(const vcomanda &a){
     system("cls");
     nwin();
     cnod *i = a.getStart();
