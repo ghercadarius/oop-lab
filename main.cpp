@@ -1,4 +1,6 @@
 #include <iostream>
+#include <memory>
+#include <new>
 #include <cstring>
 #include <stdlib.h>
 using namespace std;
@@ -149,7 +151,7 @@ public:
 
 struct cnod{
     comanda el;
-    cnod *next;
+    cnod *next = nullptr;
 };
 
 class vcomanda{
@@ -160,7 +162,7 @@ public:
         start = nullptr;
         end = nullptr;
     }
-    explicit vcomanda(comanda &nel){
+    explicit vcomanda(const comanda &nel){
         start = new cnod;
         start -> el = nel;
         start -> next = nullptr;
@@ -171,27 +173,51 @@ public:
         end = i.getEnd();
     }
     ~vcomanda(){
-        cnod *i = start,*t;
-        while(i!=nullptr){
-            t = i -> next;
-            delete i;
-            i = t;
+        if(start != nullptr){
+            cnod *i = start,*t = i -> next;
+            while(i -> next != nullptr){
+                delete i;
+                i = t;
+                t = i -> next;
+            }
+            start = nullptr;
         }
     }
-    void append(comanda &nel){
+    void append(comanda &nel)
+    {
+        if(start)///daca am alocat deja memorie pentru prima pozitie din lista, adica am inceputa lista
+        {
+            cnod *aux = new cnod;
+            aux=new cnod; ///alocam memorie pentru un nod nou
+            aux->el=nel;
+            end->next=aux;
+            end=aux;
+            end->next=NULL;
+        }
+        else
+        {
+            start=new cnod;
+            start->el=nel;
+            start->next=NULL;
+            end = start;
+        }
+    }
+    /*void append(comanda &nel){
         cnod *aux = new cnod;
         if(end == nullptr){
             start = new cnod;
             start -> el = nel;
             start -> next = nullptr;
             end = start;
-            return;
         }
-        end -> next = aux;
-        aux -> el = nel;
-        aux -> next = nullptr;
-        end = aux;
-    }
+        else
+        {
+            end -> next = aux;
+            aux -> el = nel;
+            aux -> next = nullptr;
+            end = aux;
+        }
+    }*/
     cnod* getStart() const{
         return start;
     }
@@ -218,7 +244,7 @@ public:
         return rez;
     }
     friend std::ostream& operator<<(ostream& os, const vcomanda& a){
-        cnod *i = a.getIterator();
+        cnod *i = a.getStart();
         while(i != nullptr){
             os << i -> el << "\n";
             i = i -> next;
@@ -237,13 +263,6 @@ public:
         }
         return is;
     }
-    cnod* getIterator() const{
-        cnod *i;
-        i = new cnod;
-        i = start;
-        return i;
-    }
-
 };
 
 
@@ -256,7 +275,7 @@ class masina{
     vcomanda comenzi;
 
 public:
-    masina(char *cul, char *v, int mot, char *firm, int imp, vcomanda ncomenzi){
+    masina(char *cul, char *v, int mot, char *firm, int imp, vcomanda &ncomenzi){
         culoare = new char [sstrlen(cul)+1];
         vin = new char [sstrlen(vin)+1];
         firma = new char [sstrlen(firm)+1];
@@ -285,6 +304,7 @@ public:
         vin = aux.getVin();
         firma = aux.getFirma();
         capacitate_motor = aux.getCapacitate();
+        impozit = aux.getImpozit();
         comenzi = aux.getComenzi();
     }
     ~masina(){
@@ -294,12 +314,14 @@ public:
             delete [] vin;
         if(firma)
             delete [] firma;
+        ///cum pot dealoca comenzi doar daca am comenzi.getStart() != nullptr ??
     }
     masina& operator =(masina &aux){
         this -> culoare = aux.getCuloare();
         this -> vin = aux.getVin();
         this -> firma = aux.getFirma();
         this -> capacitate_motor = aux.getCapacitate();
+        this -> impozit = aux.getImpozit();
         this -> comenzi = aux.getComenzi();
         return *this;
     }
@@ -368,9 +390,9 @@ public:
         char *f = new char[100];
         is.getline(f, 99);
         is.get();
-        char *c = new char [100];
+        char *cul = new char [100];
         cout<<"Culoare:\n";
-        is.getline(c, 99);
+        is.getline(cul, 99);
         is.get();
         cout<<"Capacitate motor:\n";
         int cap;
@@ -381,15 +403,15 @@ public:
         cout<<"Comenzi:\n";
         vcomanda aux;
         is >> aux;
-        masina tp(c, v, cap, f, nimp, aux);
+        masina tp(cul, v, cap, f, nimp, aux);
         a = tp;
         return is;
     }
 
 };
 
-masina m[100];
-vcomanda c[100];
+masina m[5];
+vcomanda c[5];
 int im = 0, ic = 0;
 
 void nwin(){
@@ -484,7 +506,7 @@ void mmas() {
         cout<<" Masini\n";
         cout<<"1. Citire masina\n";
         cout<<"2. Afisare masina\n";
-        cout<<"3. Stergere masina\n";
+        cout<<"3. Stergere masina - Nu merge\n";
         cout<<"4. Optiuni masina\n";
         cout<<"5. Inapoi\n";
         cin>>n;
@@ -503,8 +525,7 @@ void mmas() {
                 cout<<"Numar total masini: "<<im<<"\n";
                 cout<<"Numarul masinii:\n";
                 cin>>nm;
-                if(im >= nm)
-                    std::destroy_at(std::addressof(m[nm]));
+                ///NU MERGE - stergerea m[nm]
                 break;
             case 4:
                 cout<<"Numar total masini: "<<im<<"\n";
@@ -565,7 +586,7 @@ void commod(comanda a){
 void parcurgere(vcomanda &a){
     system("cls");
     nwin();
-    cnod *i = a.getIterator();
+    cnod *i = a.getStart();
     int n = 1;
     comanda primul;
     comanda doi;
@@ -643,7 +664,7 @@ void mcom(){
         cout<<"Comenzi\n";
         cout<<"1. Citire comanda\n";
         cout<<"2. Afisare comanda\n";
-        cout<<"3. Stergere comanda\n";
+        cout<<"3. Stergere comanda - Nu merge\n";
         cout<<"4. Modificare comanda\n";
         cout<<"5. Inapoi\n";
         cin>>n;
@@ -662,8 +683,9 @@ void mcom(){
                 cout<<"Numar total comenzi "<<ic<<"\n";
                 cout<<"Numar comanda\n";
                 cin>>nc;
-                if(nc >= ic)
-                    std::destroy_at(std::addressof(c[nc]));
+                ///NU MERGE - Stergerea lui c[nc]
+                /*if(nc >= ic)
+                    std::destroy_at(std::addressof(c[nc]));*/
                 break;
             case 4:
                 cout<<"Numar total comenzi "<<ic<<"\n";
