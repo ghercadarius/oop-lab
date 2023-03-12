@@ -631,7 +631,7 @@ void parcurgere(const vcomanda &a){
         }
     }
 }
-void cmodifica(vcomanda &a, int index){
+void cmodifica(const vcomanda &a, int index){
     system("cls");
     nwin();
     int n = 1;
