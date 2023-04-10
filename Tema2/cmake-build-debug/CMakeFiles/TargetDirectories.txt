@@ -1,0 +1,3 @@
+C:/Users/gherc/Documents/GitHub/oop-lab/Tema2/cmake-build-debug/CMakeFiles/Tema2.dir
+C:/Users/gherc/Documents/GitHub/oop-lab/Tema2/cmake-build-debug/CMakeFiles/edit_cache.dir
+C:/Users/gherc/Documents/GitHub/oop-lab/Tema2/cmake-build-debug/CMakeFiles/rebuild_cache.dir
